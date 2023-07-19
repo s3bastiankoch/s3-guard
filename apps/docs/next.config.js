@@ -4,6 +4,5 @@ const withNextra = require("nextra")({
 });
 
 module.exports = withNextra({
-  reactStrictMode: true,
-  transpilePackages: ["ui"],
+  output: "export",
 });
