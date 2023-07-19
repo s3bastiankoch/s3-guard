@@ -1,0 +1,36 @@
+{
+  "name": "@s3-guard/docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.370.0",
+    "aws4fetch": "^1.0.17",
+    "csv-parse": "^5.4.0",
+    "data-forge": "^1.10.1",
+    "fetch-retry": "^5.0.6",
+    "lucide-react": "^0.261.0",
+    "minimatch": "^9.0.3",
+    "next": "^13.4.1",
+    "nextra": "^2.10.0",
+    "nextra-theme-docs": "^2.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.12",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
+    "autoprefixer": "^10.4.14",
+    "eslint-config-custom": "workspace:*",
+    "postcss": "^8.4.26",
+    "tailwindcss": "^3.3.3",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.3"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@s3-guard/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.mjs",
+  "exports": "./build/index.mjs",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "Sebastian Koch",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.370.0"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6"
+  }
+}

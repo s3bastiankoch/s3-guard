@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "isolatedModules": false,
+    "moduleResolution": "node",
+    "target": "es2017"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

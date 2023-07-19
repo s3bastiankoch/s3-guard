@@ -1,0 +1,46 @@
+# Welcome to S3 Guard
+
+S3 Guard is an s3-compatible proxy trying to enable developers to be compliant with privacy laws.
+
+## Getting Started
+
+We assume that you already have am s3 compatible bucket ready.
+
+To run the proxy via docker:
+
+```sh
+git clone https://github.com/s3bastiankoch/s3-guard.git && cd s3-guard && docker-compose up -d
+```
+
+Next you need our cli:
+
+```sh
+npm install -g s3-guard
+```
+
+### Your first access control rule
+
+We will now develop our first access control.
+
+```js
+puporse1 := purpose()
+```
+
+### The config.yml
+
+```yaml
+rules:
+	- name: Our first policy
+	  description:
+	  policy: ./example.rego
+
+	  match:
+	  	paths:
+			- *.csv
+```
+
+Now we can deploy the config:
+
+```sh
+s3-guard --config config.yml
+```
