@@ -46,6 +46,21 @@ func main() {
 		},
 	)
 
+	// Add function with zero arguments
+	rego.RegisterBuiltinDyn(
+		&rego.Function{
+			Name: "image.blur_faces",
+			Decl: types.NewFunction(types.Args(), types.A),
+		},
+		func(bctx rego.BuiltinContext, _ []*ast.Term) (*ast.Term, error) {
+			
+			return ast.ObjectTerm(
+				ast.Item(ast.StringTerm("key"), ast.StringTerm("image.blur_faces")),
+				ast.Item(ast.StringTerm("input"), ast.ArrayTerm(),
+			)), nil
+		},
+	)
+
 	rego.RegisterBuiltin1(
 		&rego.Function{
 			Name: "purpose",
