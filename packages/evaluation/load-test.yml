@@ -1,1 +1,29 @@
-# TODO
+config:
+  target: "{{ $processEnvironment.S3_URL }}/{{ $processEnvironment.S3_BUCKET_NAME }}"
+  # target: "{{ $processEnvironment.S3_PROXY_ENDPOINT }}/{{ $processEnvironment.S3_BUCKET_NAME }}"
+  processor: functions.js
+  tls:
+    rejectUnauthorized: false
+  phases:
+    - duration: 10
+      arrivalRate: 1
+      rampTo: 3
+      name: Warm up phase
+    - duration: 10
+      arrivalRate: 3
+      rampTo: 5
+      name: Ramp up load
+    - duration: 10
+      arrivalRate: 5
+      name: Spike phase
+
+  plugins:
+    metrics-by-endpoint: {}
+scenarios:
+  - flow:
+      - loop:
+          - get:
+              url: "/james-doe.csv?p_purpose=test"
+              beforeRequest: "signRequest"
+              afterResponse: "logResponse"
+        count: 2

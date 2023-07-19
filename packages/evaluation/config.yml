@@ -1,0 +1,11 @@
+rules:
+  - name: Benchmark
+    description: Simple benchmark
+
+    policy:
+      file: ./purpose.rego
+      entrypoint: pbac
+
+    match:
+      paths:
+        - "*.csv"

@@ -3,10 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "Sebastian Koch",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "upload": "s3-guard"
+  },
+  "devDependencies": {
+    "aws4fetch": "^1.0.17",
+    "dotenv": "^16.3.1",
+    "s3-guard": "workspace:^0.0.1"
+  },
+  "dependencies": {
+    "aws4": "^1.12.0"
+  }
 }
