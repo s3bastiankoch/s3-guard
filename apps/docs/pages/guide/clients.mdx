@@ -1,0 +1,46 @@
+# Clients
+
+We provide a convinient wrapper for the official AWS S3 client to integrate with our proxy.
+Currently only a javascript client is available while making requests compatible with our proxy server
+is straightforward and can be done with any client.
+
+## Javascript
+
+The javascript client is available as an npm package: `@s3-guard/core` and can be installed with `npm install @s3-guard/core`.
+The `wrapClient` function takes an AWS S3 client and returns a wrapped client that will make requests compatible with our proxy.
+We add a `setContext` method to the client that allows you to set the context of the request before making it.
+
+```javascript
+import { wrapClient } from "@s3-guard/core";
+import { S3Client } from "@aws-sdk/client-s3";
+
+const client = wrapClient(
+  new S3Client({
+    endpoint: process.env.OUR_PROXY_URL,
+  })
+);
+
+await client
+  .setContext({
+    purpose: "purpose1",
+  })
+  .send(
+    new GetObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: fileName,
+    })
+  );
+```
+
+The context we are setting here will be added to the requests and is passed to access policies under `input.*`.
+The purpose field is a reserved field that is used to match the request against purposes defined in the access policy.
+Setting the context is optional and if you don't set it, the request will be made without a context.
+
+## How it works
+
+When wrapping the official AWS S3 client, we intercept the `send` method and add the context of the request
+to the URL as a query parameter. We prefix the url parameters with `p_` to hint the proxy which parameters are relevant. The example above will result in the following request:
+
+```
+GET /<fileName>?p_purpose=purpose1
+```

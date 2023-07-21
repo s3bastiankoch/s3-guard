@@ -1,0 +1,70 @@
+# Installation
+
+## Getting Started
+
+We assume that you already have an s3 compatible bucket ready and deployed somewhere.
+
+You can clone our repository using git:
+
+```sh
+git clone https://github.com/s3bastiankoch/s3-guard.git && cd s3-guard
+```
+
+After changing the directory to `s3-gaurd` you can create a .env.local file with the following structure:
+
+```sh
+S3_URL=
+S3_ACCESS_KEY_ID=
+S3_SECRET_ACCESS_KEY=
+S3_BUCKET_NAME=
+OPA_SERVER_ENDPOINT=
+```
+
+Depending how you have setup your S3 bucket you have to obtain the credentials for your bucket.
+
+Finanlly you can start the proxy and the OPA server using docker compose:
+
+```sh
+docker-compose up -d
+```
+
+Using our CLI you can deploy your first policy. To install our CLI via npm:
+
+```sh
+npm install -g s3-guard
+```
+
+### Your first access control rule
+
+The CLI needs to know where to find your OPA server and your S3 bucket which is defined in your .env file.
+
+You can write your first policy in rego and save it as `example.rego`:
+
+```js
+puporse1 := purpose({
+	"transformers": []
+})
+```
+
+### The config.yml
+
+The config.yml defines the rules which should be deployed to your OPA server. You can define multiple rules in the config.yml.
+You need to point in each rule to the policy file, in our case the `example.rego` file with just defined.
+The `match` section defines which files should be matched by the rule. The example is matching all files with the extension `.csv`.
+
+```yaml
+rules:
+	- name: Our first policy
+	  description:
+	  policy: ./example.rego
+
+	  match:
+	  	paths:
+			- *.csv
+```
+
+Now we can deploy the config:
+
+```sh
+s3-guard --config config.yml
+```

@@ -1,0 +1,30 @@
+# Benchmark
+
+The following benchmark compares direct S3 data access with our component.
+The S3 bucket for this benchmark is hosted as an Cloudflare R2 Storage Bucket in a similar region as the proxy. The proxy is running on
+Hetzner.
+After an initial warm up phase we are running a load test with on average 5 requests per second for 60 seconds. We are
+measuring the latency introduced by our component. The proxy is checking against one access policy and no transformers are being used.
+The code for this benchmark can be found [here](https://github.com/s3bastiankoch/s3-guard/tree/main/packages/evaluation).
+
+## Results
+
+The table is showing response times in milliseconds. The first row is showing the latency of the S3 bucket without our proxy.
+The second row is showing the latency of the S3 bucket with our proxy.
+| | min | max | median | p95 | p99 |
+| -------------- | --- | --- | --- | --- | --- |
+| Without proxy | 108 | 923 | 153 | 257.3 | 441.5 |
+| With proxy | 279 | 962 | 333.7 | 608 | 907 |
+
+## Interpretation
+
+Even with a very simple setup we already see an increase in latency.
+This is due to an additional network hop for checking the policy on the OPA Server.
+With introducing more complex policies and transformers the latency will increase significantly.
+Our component adds overhead and latency when accessing data.
+Since this project is early-staged many optimizations are still missing.
+
+## Potential Optimizations
+
+Our proxy is edge-compatible and could be for example deployed on [Cloudflare Workers](https://workers.cloudflare.com).
+By integrating an intelligent caching strategy we could reduce the latency and overhead significantly.

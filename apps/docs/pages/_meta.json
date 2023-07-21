@@ -1,5 +1,9 @@
 {
   "index": "Introduction",
+  "guide": "Guide",
   "access-control": "Access Control",
-  "transformer": "Transformer"
+  "transformer": "Transformer",
+  "logging": "Logging Service",
+  "benchmark": "Benchmark",
+  "outlook": "Outlook"
 }

@@ -1,0 +1,22 @@
+# Image Data
+
+> 🚧 WIP - This section is still a work in progress and not finished yet.
+
+## Functions
+
+```js
+purpose({
+  transformers: [image.blur_faces()],
+});
+```
+
+This transformer will automatically blur all faces in an image.
+We utilize our [faceblur server](https://github.com/s3bastiankoch/faceblur).
+To run it, you can use the following command:
+
+```bash
+docker build -t faceblur . && docker run -d -p 5000:5000 -t faceblur
+```
+
+The server is based on [yolov8-face](https://github.com/derronqi/yolov8-face/tree/main) by [derronqi](https://github.com/derronqi).
+We wrapped a simple flask server around it. The integration with our proxy is still being worked on.

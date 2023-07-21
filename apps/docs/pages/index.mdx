@@ -1,48 +1,37 @@
 # Welcome to S3 Guard
 
-S3 Guard is an s3-compatible proxy trying to enable developers to be compliant with privacy laws.
+**S3 Guard** is an s3-compatible proxy enhancing data privacy when using s3-compatible storage services.
 
-## Getting Started
+We provide the following features:
 
-We assume that you already have am s3 compatible bucket ready.
+- 🔒 Access policies based on [Open Policy Agent](https://www.openpolicyagent.org/)
+- 📝 Purpose dependent data transformations
+- 🪟 Transparency through integrated logging
+- 📑 Policy management through CLI
+- 🧩 Easily adaptable due to S3-compatibility
 
-To run the proxy via docker:
+> S3 Guard was developed as a research project at the [Technical University of Berlin](https://www.tu.berlin/) as part of the privacy engineering course by Dr.-Ing. Frank Pallas.
 
-```sh
-git clone https://github.com/s3bastiankoch/s3-guard.git && cd s3-guard && docker-compose up -d
-```
+## Architecture
 
-Next you need our cli:
+![Architecture](/architecture.png)
 
-```sh
-npm install -g s3-guard
-```
+**S3 Guard** sits between your application and your s3-compatible storage service.
+It intercepts all requests and applies the configured policies to the data.
+The policies are written in [rego](https://www.openpolicyagent.org/docs/latest/policy-language/) and can be easily adapted to your needs.
+We extended the rego language with a few custom functions that can be explored under [functions](./functions),
+allowing easy to use purpose dependent data transformations.
+Further we also provide a [CLI](./cli) to easily manage your policies, as well as a logging service integrated in the proxy.
 
-### Your first access control rule
+## Why is it useful?
 
-We will now develop our first access control.
-
-```js
-puporse1 := purpose({
-	"transformers": []
-})
-```
-
-### The config.yml
-
-```yaml
-rules:
-	- name: Our first policy
-	  description:
-	  policy: ./example.rego
-
-	  match:
-	  	paths:
-			- *.csv
-```
-
-Now we can deploy the config:
-
-```sh
-s3-guard --config config.yml
-```
+Data privacy is a big topic in the modern world.
+With the rise of cloud computing, more and more data is stored in the cloud.
+This data is often sensitive and needs to be protected.
+S3 Guard allows you to easily protect your data by applying policies to it.
+The GDPR states that data access should be limited to the minimum necessary.
+S3 Guard allows you to do exactly that.
+You can define policies that only allow access to the data that is needed for a specific purpose.
+Using our abstraction, you can transform the data to only contain the necessary information.
+We implemented for example [faceblur](https://github.com/s3bastiankoch/faceblur), a very simple server that can blur faces in images.
+More transformers are planned.

@@ -1,1 +1,15 @@
-# Tabular Transformer
+# Tabular Data
+
+The tabular transformers automatically detect tabular data like CSV-files and apply the correct transformations.
+
+## Functions
+
+### `allow_columns`
+
+```js
+purpose({
+  transformers: [tabular.allow_columns],
+});
+```
+
+This transformer allows only the specified columns to pass through. It will remove all other columns.

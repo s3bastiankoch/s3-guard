@@ -1,0 +1,12 @@
+# Logging Service
+
+To enhance transparency of data usage patterns for the user we have integrated an optional logging service.
+Whenever data is being access through our proxy the data access is being logged along with information about the context
+in which the data is being accessed. We log the time of access and whether the access was successful or not.
+If the context includes a purpose we log the purpose as well. This information can be used to present
+the user with a summary of the data usage patterns in the UI of your application.
+We do not log the data itself.
+To allow easy adaptability to your application we rely on a adapter patter where you can use your own SQL database
+like MySQL or PostgreSQL to store the logs.
+By passing a `DATABASE_URL` environment variable to the proxy you can enable the logging. If no database is specified
+the logging is disabled.

@@ -1,0 +1,47 @@
+# Purpose based access
+
+Purpose based access control is a way to define access control policies based on the purpose of the data. The GDPR
+requires that data is only used for the purpose it was collected for. We allow combining purpose based access control with
+data transformations.
+
+## Example
+
+```js
+purpose1 := purpose({
+	"transformers": [tabular.allow_columns(["name", "age"])]
+})
+
+```
+
+By passing the purpose as an context to an S3 data access request, the data will be transformed before it is returned.
+
+```
+GET /<fileName>?p_purpose=purpose1
+```
+
+Our proxy will automatically determine the data type that is being accessed and apply the correct transformer.
+In the example above we are assuming the provided access policy is associated with tabular data from a CSV-file for example.
+By default no data access is allowed and specific purposed allow explicitly certain columns to be accessed. In our example
+`name` and `age`.
+The transformers we provide are being explained more in detail under the [transformer section](/transformer).
+If no purpose from the provided context is matching against any policy definition no data will get returned.
+
+## Building a purpose graph
+
+We extended the idea of a flat list of policies to allow arbtrary graphs of purposes by specifying the optional `specifies` property.
+
+```js
+purpose1 := purpose({
+	"transformers": [tabular.allow_columns(["name", "age"])]
+})
+
+purpose2 := purpose({
+	"specifies": [purpose1],
+	"transformers": [tabular.allow_columns(["address"])]
+})
+
+```
+
+This example defines a very simple tree of purposed where the purpose `purpose2` is inheriting from `purpose1`. This means that
+`purpose2` is allowed to access all columns that `purpose1` is allowed to access. In addition `purpose2` is allowed to access
+the `address` column.

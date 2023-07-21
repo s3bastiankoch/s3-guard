@@ -8,7 +8,10 @@
     "build"
   ],
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
+    "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
+    "pub:release": "pnpm build && pnpm publish --access public"
   },
   "keywords": [],
   "author": "Sebastian Koch",
